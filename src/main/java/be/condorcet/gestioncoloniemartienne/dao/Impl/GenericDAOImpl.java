@@ -1,4 +1,4 @@
-/*package be.condorcet.gestioncoloniemartienne.dao.Impl;
+package be.condorcet.gestioncoloniemartienne.dao.Impl;
 
 import be.condorcet.gestioncoloniemartienne.dao.GenericDAO;
 import jakarta.persistence.EntityManager;
@@ -6,7 +6,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
+public abstract class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 
     protected final EntityManager em;
     private final Class<T> entityClass;
@@ -42,4 +42,4 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
                 em.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass);
         return query.getResultList();
     }
-}*/
+}
