@@ -1,12 +1,9 @@
-<!--<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0" >
-    <persistence-unit name="cinema-pu" transaction-type="RESOURCE_LOCAL">
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0" >
+    <persistence-unit name="colonie-pu" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>be.condorcet.helloworld2.Modele.Realisateur</class>
-        <class>be.condorcet.helloworld2.Modele.Film</class>
-
-        <class>be.condorcet.helloworld2.Modele.Maison</class>
-        <class>be.condorcet.helloworld2.Modele.Sorcier</class>
+        <!-- Tu ajouteras tes classes ici plus tard, comme ça : -->
+        <!-- <class>be.condorcet.gestioncoloniemartienne.model.MembreEquipage</class> -->
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
@@ -16,11 +13,13 @@
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
 
-
+            <!-- Attention : "drop-and-create" vide la table à chaque redémarrage. -->
+            <!-- Passe à "update" quand tu voudras garder tes données. -->
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 
         </properties>
     </persistence-unit>
-</persistence>-->
+</persistence>
