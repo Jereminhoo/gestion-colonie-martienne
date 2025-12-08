@@ -2,8 +2,7 @@
     <persistence-unit name="colonie-pu" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Tu ajouteras tes classes ici plus tard, comme ça : -->
-        <!-- <class>be.condorcet.gestioncoloniemartienne.model.MembreEquipage</class> -->
+        <class>be.condorcet.gestioncoloniemartienne.model.MembreEquipage</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
