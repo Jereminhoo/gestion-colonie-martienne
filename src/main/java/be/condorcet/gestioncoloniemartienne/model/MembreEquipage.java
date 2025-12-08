@@ -23,18 +23,22 @@ public class MembreEquipage implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    // gerer les roles plus tard!
+    // "CHEF" ou "MEMBRE"
+    @Column(nullable = false)
+    private String role;
+
     private String specialite; // ex: mecano, Ingénieur...
 
     // Constructeur vide OBLIGATOIRE pour JPA
     public MembreEquipage() {}
 
-    // Constructeur pratique pour nous (Sans le rôle pour l'instant)
-    public MembreEquipage(String nom, String prenom, String login, String password, String specialite) {
+    // Constructeur complet
+    public MembreEquipage(String nom, String prenom, String login, String password, String role, String specialite) {
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;
         this.password = password;
+        this.role = role;
         this.specialite = specialite;
     }
 
@@ -55,8 +59,9 @@ public class MembreEquipage implements Serializable {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
     public String getSpecialite() { return specialite; }
     public void setSpecialite(String specialite) { this.specialite = specialite; }
-
 }
