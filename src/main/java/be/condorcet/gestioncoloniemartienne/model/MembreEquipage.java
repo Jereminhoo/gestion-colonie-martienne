@@ -2,6 +2,7 @@ package be.condorcet.gestioncoloniemartienne.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "MEMBRE_EQUIPAGE")
@@ -28,6 +29,10 @@ public class MembreEquipage implements Serializable {
     private String role;
 
     private String specialite; // ex: mecano, Ingénieur...
+
+    /*@OneToMany(mappedBy="membre")
+    private List<Mission> missions = new ArrayList<>();*/
+
 
     // Constructeur vide OBLIGATOIRE pour JPA
     public MembreEquipage() {}

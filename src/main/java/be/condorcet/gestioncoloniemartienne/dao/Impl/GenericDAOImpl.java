@@ -33,7 +33,8 @@ public abstract class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 
     @Override
     public void delete(T entity) {
-        em.remove(entity);
+        em.remove(em.merge(entity)); // qd c'est plus lié a la session ca permet de plus lié a la
+
     }
 
     @Override

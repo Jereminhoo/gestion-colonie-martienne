@@ -17,7 +17,7 @@ public class MembreDAOImpl extends GenericDAOImpl<MembreEquipage, Long> implemen
     @Override
     public MembreEquipage findByLogin(String login) {
         try {
-            // Une requête JPQL simple : on cherche l'objet m où m.login correspond
+            // Une requête JPQL (syntaxe sql pour java) simple : on cherche l'objet m où m.login correspond
             TypedQuery<MembreEquipage> query = em.createQuery(
                     "SELECT m FROM MembreEquipage m WHERE m.login = :login",
                     MembreEquipage.class
