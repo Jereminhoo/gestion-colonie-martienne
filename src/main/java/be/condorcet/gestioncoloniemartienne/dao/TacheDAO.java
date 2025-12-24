@@ -4,7 +4,7 @@ import be.condorcet.gestioncoloniemartienne.model.Tache;
 
 import java.util.List;
 
-public interface TacheDAO {
+public interface TacheDAO extends GenericDAO<Tache, Long> {
 
     List<Tache> findByMissionId(Long missionId);
 }

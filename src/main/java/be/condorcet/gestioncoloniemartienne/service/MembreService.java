@@ -4,6 +4,7 @@ import be.condorcet.gestioncoloniemartienne.dao.MembreDAO;
 import be.condorcet.gestioncoloniemartienne.dao.Impl.MembreDAOImpl;
 import be.condorcet.gestioncoloniemartienne.exception.BusinessException;
 import be.condorcet.gestioncoloniemartienne.model.MembreEquipage;
+import be.condorcet.gestioncoloniemartienne.model.Mission;
 import be.condorcet.gestioncoloniemartienne.util.PasswordUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -75,5 +76,9 @@ public class MembreService {
 
     public MembreEquipage trouverParLogin(String login) {
         return dao.findByLogin(login);
+    }
+
+    public MembreEquipage trouverParId(Long id) {
+        return dao.findById(id);
     }
 }
