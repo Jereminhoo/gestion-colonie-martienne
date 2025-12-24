@@ -9,6 +9,8 @@
         <class>be.condorcet.gestioncoloniemartienne.model.MembreEquipage</class>
         <class>be.condorcet.gestioncoloniemartienne.model.Ressource</class>
         <class>be.condorcet.gestioncoloniemartienne.model.Mission</class>
+        <class>be.condorcet.gestioncoloniemartienne.model.Tache</class>
+
 
         <properties>
 

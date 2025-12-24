@@ -3,6 +3,7 @@ package be.condorcet.gestioncoloniemartienne.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "MEMBRE_EQUIPAGE")
@@ -30,8 +31,9 @@ public class MembreEquipage implements Serializable {
 
     private String specialite; // ex: mecano, Ingénieur...
 
-    /*@OneToMany(mappedBy="membre")
-    private List<Mission> missions = new ArrayList<>();*/
+    //Un membre peut avoir plusieurs tâches assignées
+    @OneToMany(mappedBy = "membreAssigne")
+    private List<Tache> tachesAssignees;
 
 
     // Constructeur vide OBLIGATOIRE pour JPA
@@ -69,4 +71,7 @@ public class MembreEquipage implements Serializable {
 
     public String getSpecialite() { return specialite; }
     public void setSpecialite(String specialite) { this.specialite = specialite; }
+
+    public List<Tache> getTachesAssignees() { return tachesAssignees; }
+    public void setTachesAssignees(List<Tache> tachesAssignees) { this.tachesAssignees = tachesAssignees; }
 }

@@ -3,6 +3,7 @@ package be.condorcet.gestioncoloniemartienne.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "MISSION")
@@ -30,6 +31,12 @@ public class Mission implements Serializable {
     public Mission() {
     }
 
+    //Une mission contient une liste de tâches
+    // "mappedBy" doit correspondre au nom de la variable dans la classe Tache (qu'on fera juste après)
+    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tache> taches;
+
+
     public Mission(String titre, String description, LocalDate dateDebut, LocalDate dateFin, String statut) {
         this.titre = titre;
         this.description = description;
@@ -56,6 +63,9 @@ public class Mission implements Serializable {
 
     public String getStatut() { return statut; }
     public void setStatut(String statut) { this.statut = statut; }
+
+    public List<Tache> getTaches() { return taches; }
+    public void setTaches(List<Tache> taches) { this.taches = taches; }
 
     @Override
     public String toString() {
