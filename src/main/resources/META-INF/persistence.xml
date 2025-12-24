@@ -7,7 +7,7 @@
 
         <!-- Entités -->
         <class>be.condorcet.gestioncoloniemartienne.model.MembreEquipage</class>
-        <!-- Ajoute ici Ressource, Tache, Mission quand elles existent -->
+        <class>be.condorcet.gestioncoloniemartienne.model.Ressource</class>
 
         <properties>
 
