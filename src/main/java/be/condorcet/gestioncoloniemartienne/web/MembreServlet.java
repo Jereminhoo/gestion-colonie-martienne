@@ -1,5 +1,6 @@
 package be.condorcet.gestioncoloniemartienne.web;
 
+import be.condorcet.gestioncoloniemartienne.exception.BusinessException;
 import be.condorcet.gestioncoloniemartienne.model.MembreEquipage;
 import be.condorcet.gestioncoloniemartienne.service.MembreService;
 import jakarta.inject.Inject;
@@ -39,28 +40,44 @@ public class MembreServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8"); // juste pour que les accents etc soient la
 
-        String action = request.getParameter("action");
+        try{
 
-        if ("delete".equals(action)) {
+            String action = request.getParameter("action");
 
-            Long id = Long.parseLong(request.getParameter("id"));
-            service.supprimerMembre(id);
-            System.out.println("Supprimation d'un membre");
-        } else {
-            // création
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String login = request.getParameter("login");
-            String pass = request.getParameter("password");
-            String spec = request.getParameter("specialite");
+            if ("delete".equals(action)) {
 
-            MembreEquipage m = new MembreEquipage(nom, prenom, login, pass, "MEMBRE", spec);
+                Long id = Long.parseLong(request.getParameter("id"));
+                service.supprimerMembre(id);
+                System.out.println("Supprimation d'un membre");
+            } else {
+                // création
+                String nom = request.getParameter("nom");
+                String prenom = request.getParameter("prenom");
+                String login = request.getParameter("login");
+                String pass = request.getParameter("password");
+                String spec = request.getParameter("specialite");
 
-            // Sauvegarder
-            service.ajouterMembre(m);
+                MembreEquipage m = new MembreEquipage(nom, prenom, login, pass, "MEMBRE", spec);
+
+                // Sauvegarder
+                service.ajouterMembre(m);
+            }
+
+            // Recharger la page
+            response.sendRedirect("membres");
+        }catch(BusinessException e){
+
+            // met le msg d'erreur dans la requete
+            request.setAttribute("erreur", e.getMessage());
+
+            // recharge les membres car on passe pas par doget donc membres peut etre null
+            request.setAttribute("membres", service.listerTous());
+
+            // Ré-affichage de la page avec message
+            request.getRequestDispatcher("/WEB-INF/JSP/membres.jsp")
+                    .forward(request, response);
+
         }
 
-        // Recharger la page
-        response.sendRedirect("membres");
     }
 }

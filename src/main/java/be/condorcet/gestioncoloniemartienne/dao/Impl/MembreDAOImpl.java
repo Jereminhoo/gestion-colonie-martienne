@@ -31,4 +31,18 @@ public class MembreDAOImpl extends GenericDAOImpl<MembreEquipage, Long> implemen
             return null;
         }
     }
+
+    @Override
+    public boolean existsByNomPrenom(String nom, String prenom) {
+
+        Long count = em.createQuery(
+                        "SELECT COUNT(m) FROM MembreEquipage m WHERE m.nom = :nom AND m.prenom = :prenom",
+                        Long.class
+                )
+                .setParameter("nom", nom)
+                .setParameter("prenom", prenom)
+                .getSingleResult();
+
+        return count > 0;
+    }
 }

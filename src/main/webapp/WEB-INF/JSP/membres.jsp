@@ -22,11 +22,16 @@
 </head>
 <body>
 
-<h1>👨‍🚀 Gestion de l'Équipage Martien</h1>
+<h1>Gestion de l'Équipage Martien</h1>
 
 <div class="container">
 
 
+    <c:if test="${not empty erreur}">
+        <div style="color: red; margin-bottom: 15px; font-weight: bold;">
+            ⚠️ ${erreur}
+        </div>
+    </c:if>
     <div class="box" style="flex: 1;">
         <h2>Nouveau Membre</h2>
         <form action="membres" method="post">

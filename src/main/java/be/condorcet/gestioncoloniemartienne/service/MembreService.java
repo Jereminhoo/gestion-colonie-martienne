@@ -2,6 +2,7 @@ package be.condorcet.gestioncoloniemartienne.service;
 
 import be.condorcet.gestioncoloniemartienne.dao.MembreDAO;
 import be.condorcet.gestioncoloniemartienne.dao.Impl.MembreDAOImpl;
+import be.condorcet.gestioncoloniemartienne.exception.BusinessException;
 import be.condorcet.gestioncoloniemartienne.model.MembreEquipage;
 import be.condorcet.gestioncoloniemartienne.util.PasswordUtils;
 import jakarta.annotation.PostConstruct;
@@ -27,6 +28,21 @@ public class MembreService {
 
     @Transactional
     public void ajouterMembre(MembreEquipage m) {
+
+        // Login déjà pris
+        if (dao.findByLogin(m.getLogin()) != null) {
+            throw new BusinessException("Login déjà utilisé");
+        }
+
+        //Nom + prénom déjà existants
+        if (dao.existsByNomPrenom(m.getNom(), m.getPrenom())) {
+            throw new BusinessException("Un membre avec ce nom et prénom existe déjà");
+        }
+
+        // Mot de passe trop faible
+        if (m.getPassword() == null || m.getPassword().length() < 6) {
+            throw new BusinessException("Mot de passe trop faible (min. 6 caractères)");
+        }
         m.setRole("MEMBRE"); // règle métier
 
         // Hash du mot de passe
@@ -39,8 +55,16 @@ public class MembreService {
     @Transactional
     public void supprimerMembre(Long id) {
         MembreEquipage m = dao.findById(id);
-        dao.delete(m);
-        System.out.println("Supprimer membre avec succes!");
+
+
+        //Interdiction de supprimer le CHEF
+        if (m != null && "CHEF".equals(m.getRole())) {
+            throw new BusinessException("Impossible de supprimer le chef de base");
+        }
+
+        if (m != null) {
+            dao.delete(m);
+        }
 
     }
 
