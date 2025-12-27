@@ -7,17 +7,17 @@
 <head>
     <title>Gestion de la Colonie - Membres</title>
     <style>
-        /* Un peu de CSS rapide pour que ce soit lisible */
+
         body { font-family: sans-serif; padding: 20px; background-color: #f0f2f5; }
         table { border-collapse: collapse; width: 100%; background: white; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #2c3e50; color: white; }
+        th { background-color: #e67e22; color: white; }
         .container { display: flex; gap: 20px; }
         .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1, h2 { color: #2c3e50; }
+        h1, h2 { color: #e67e22; }
         input, select { display: block; margin-bottom: 10px; padding: 5px; width: 100%; }
-        button { background-color: #27ae60; color: white; border: none; padding: 10px 20px; cursor: pointer; }
-        button:hover { background-color: #219150; }
+        button { background-color: #e67e22; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+        button:hover { background-color: #e67e22; }
     </style>
 </head>
 <body>
