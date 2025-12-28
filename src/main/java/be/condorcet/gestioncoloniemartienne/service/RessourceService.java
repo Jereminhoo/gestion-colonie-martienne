@@ -64,6 +64,12 @@ public class RessourceService {
     }
 
 
+    @Transactional
+    public void modifier(Ressource r) {
+        em.merge(r);
+    }
+
+
     public Ressource trouverParId(Long id) {
         return dao.findById(id);
     }

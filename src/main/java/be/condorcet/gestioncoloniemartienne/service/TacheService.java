@@ -62,4 +62,18 @@ public class TacheService {
     public List<Tache> listerParMission(Long missionId) {
         return dao.findByMissionId(missionId);
     }
+
+    public List<Tache> listerPourMembre(Long membreId) {
+        return dao.findAllByMembre(membreId);
+    }
+
+    // Pour récupérer une tâche spécifique (modif ou suppression)
+    public Tache trouverParId(Long id) {
+        return dao.findById(id);
+    }
+
+    @Transactional
+    public void modifierTache(Tache t) {
+        dao.update(t);
+    }
 }

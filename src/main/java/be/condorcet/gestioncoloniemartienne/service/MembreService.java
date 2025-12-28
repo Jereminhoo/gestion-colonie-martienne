@@ -69,8 +69,35 @@ public class MembreService {
 
     }
 
+    @Transactional
+    public MembreEquipage mettreAJourProfil(Long id, String nom, String prenom, String specialite, String newPassword) {
+        //version final en base de données
+        MembreEquipage m = dao.findById(id);
 
-    public List<MembreEquipage> listerTous() {
+        if (m == null) {
+            throw new BusinessException("Membre introuvable !");
+        }
+
+        // On met à jour les infos de base
+        m.setNom(nom);
+        m.setPrenom(prenom);
+        m.setSpecialite(specialite);
+
+        //mot de passe (Seulement si rempli)
+        if (newPassword != null && !newPassword.trim().isEmpty()) {
+            if (newPassword.length() < 3) {
+                throw new BusinessException("Le nouveau mot de passe est trop court.");
+            }
+            String hashed = PasswordUtils.hash(newPassword);
+            m.setPassword(hashed);
+        }
+
+        // 4. On sauvegarde (le 'update' retourne l'objet mis à jour)
+        return dao.update(m);
+    }
+
+
+    public List<MembreEquipage> listerTout() {
         return dao.findAll();
     }
 

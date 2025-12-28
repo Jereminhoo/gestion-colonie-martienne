@@ -17,4 +17,12 @@ public class TacheDAOImpl extends GenericDAOImpl<Tache, Long> implements TacheDA
                 .setParameter("id", missionId)
                 .getResultList();
     }
+
+    @Override
+    public List<Tache> findAllByMembre(Long membreId) {
+        // La requête JPQL qui filtre
+        return em.createQuery("SELECT t FROM Tache t WHERE t.membreAssigne.id = :mid ORDER BY t.id ASC", Tache.class)
+                .setParameter("mid", membreId)
+                .getResultList();
+    }
 }

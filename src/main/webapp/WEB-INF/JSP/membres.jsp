@@ -1,111 +1,118 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- Import de la JSTL pour faire des boucles (c:forEach) -->
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gestion de la Colonie - Membres</title>
+    <title>Équipage - Colonie</title>
     <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; margin: 0; }
+        .container { width: 90%; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
 
-        body { font-family: sans-serif; padding: 20px; background-color: #f0f2f5; }
-        table { border-collapse: collapse; width: 100%; background: white; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #e67e22; color: white; }
-        .container { display: flex; gap: 20px; }
-        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1, h2 { color: #e67e22; }
-        input, select { display: block; margin-bottom: 10px; padding: 5px; width: 100%; }
-        button { background-color: #e67e22; color: white; border: none; padding: 10px 20px; cursor: pointer; }
-        button:hover { background-color: #e67e22; }
+        /* Formulaire Chef (Visible seulement pour le chef) */
+        .chef-box { background: #e8daef; border: 1px solid #8e44ad; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .chef-box h3 { margin-top: 0; color: #8e44ad; font-size: 1.1em; }
+
+        input, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-right: 5px; margin-bottom: 5px; }
+
+        button { padding: 8px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; font-weight: bold; }
+        .btn-add { background-color: #8e44ad; } /* Violet */
+        .btn-del { background-color: #c0392b; font-size: 0.8em; padding: 5px 10px; }
+
+        /* Tableau */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background-color: #ecf0f1; color: #333; }
+
+        /* Badge Role */
+        .role-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8em; }
+        .role-chef { background: #f1c40f; color: #7f6000; }
+        .role-membre { background: #bdc3c7; color: #2c3e50; }
+
+        .error-msg { color: #c0392b; background: #fadbd8; padding: 10px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #f5b7b1; }
     </style>
 </head>
 <body>
 
-<h1>Gestion de l'Équipage Martien</h1>
+<jsp:include page="/WEB-INF/JSP/menu.jsp" />
 
 <div class="container">
-
+    <h1> Annuaire de l'Équipage</h1>
 
     <c:if test="${not empty erreur}">
-        <div style="color: red; margin-bottom: 15px; font-weight: bold;">
-            ⚠️ ${erreur}
+        <div class="error-msg">⚠️ ${erreur}</div>
+    </c:if>
+
+    <c:if test="${sessionScope.user.role == 'CHEF'}">
+        <div class="chef-box">
+            <h3>➕ Recruter un nouveau membre</h3>
+            <form action="membres" method="post">
+                <input type="text" name="nom" placeholder="Nom" required>
+                <input type="text" name="prenom" placeholder="Prénom" required>
+                <input type="text" name="login" placeholder="Identifiant" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+
+                <select name="specialite" required>
+                    <option value="" disabled selected>-- Spécialité --</option>
+                    <option value="INGENIEUR">Ingénieur</option>
+                    <option value="BOTANISTE">Botaniste</option>
+                    <option value="MEDECIN">Médecin</option>
+                    <option value="PILOTE">Pilote</option>
+                    <option value="SECURITE">Sécurité</option>
+                    <option value="OUVRIER">Ouvrier</option>
+                </select>
+
+                <button type="submit" class="btn-add">Recruter</button>
+            </form>
         </div>
     </c:if>
-    <div class="box" style="flex: 1;">
-        <h2>Nouveau Membre</h2>
-        <form action="membres" method="post">
-            <label>Nom :</label>
-            <input type="text" name="nom" required>
 
-            <label>Prénom :</label>
-            <input type="text" name="prenom" required>
-
-            <label>Login :</label>
-            <input type="text" name="login" required>
-
-            <label>Mot de passe :</label>
-            <input type="password" name="password" required>
-
-            <input type="hidden" name="role" value="MEMBRE">
-
-            <label>Spécialité :</label>
-            <select name="specialite" required>
-                <option value=""> Choisir une spécialité </option>
-                <option value="CO-PILOTE">Co-Pilote</option>
-                <option value="INGENIEUR">Ingénieur</option>
-                <option value="MEDECIN">Médecin</option>
-                <option value="MECANICIEN">Mécanicien</option>
-                <option value="BOTANISTE">Botaniste</option>
-                <option value="SECURITE">Sécurité</option>
-            </select>
-
-
-            <button type="submit">Recruter</button>
-        </form>
-    </div>
-
-
-    <div class="box" style="flex: 2;">
-        <h2>Effectif actuel</h2>
-        <table>
-            <thead>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom & Prénom</th>
+            <th>Spécialité</th>
+            <th>Rôle</th>
+            <th>Identifiant</th>
+            <c:if test="${sessionScope.user.role == 'CHEF'}">
+                <th>Action</th>
+            </c:if>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${membres}" var="m">
             <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Login</th>
-                <th>Rôle</th>
-                <th>Spécialité</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Boucle sur la liste 'membres' envoyée par la Servlet -->
-            <c:forEach var="m" items="${membres}">
-                <tr>
-                    <td>${m.id}</td>
-                    <td>${m.nom}</td>
-                    <td>${m.prenom}</td>
-                    <td>${m.login}</td>
-                    <td>${m.role}</td>
-                    <td>${m.specialite}</td>
+                <td><strong>${m.nom} ${m.prenom}</strong></td>
+
+                <td>${m.specialite}</td>
+
+                <td>
+                    <c:if test="${m.role == 'CHEF'}">
+                        <span class="role-badge role-chef">⭐ CHEF</span>
+                    </c:if>
+                    <c:if test="${m.role == 'MEMBRE'}">
+                        <span class="role-badge role-membre">Membre</span>
+                    </c:if>
+                </td>
+
+                <td>${m.login}</td>
+
+                <c:if test="${sessionScope.user.role == 'CHEF'}">
                     <td>
-                        <form action="membres" method="post" style="display:inline;">
-                            <input type="hidden" name="action" value="delete"/>
-                            <input type="hidden" name="id" value="${m.id}"/>
-                            <button type="submit"
-                                    onclick="return confirm('Supprimer ce membre ?')">
-                                ❌ Supprimer
-                            </button>
-                        </form>
+                        <c:if test="${m.role != 'CHEF'}">
+                            <form action="membres" method="post" onsubmit="return confirm('Renvoyer ce membre sur Terre ?');">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id" value="${m.id}">
+                                <button class="btn-del">Ejecter</button>
+                            </form>
+                        </c:if>
                     </td>
-                </tr>
-            </c:forEach>
-
-            </tbody>
-        </table>
-    </div>
-
+                </c:if>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 
 </body>

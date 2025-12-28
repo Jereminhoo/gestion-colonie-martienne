@@ -1,6 +1,7 @@
 package be.condorcet.gestioncoloniemartienne.web;
 
 import be.condorcet.gestioncoloniemartienne.exception.BusinessException;
+import be.condorcet.gestioncoloniemartienne.model.MembreEquipage;
 import be.condorcet.gestioncoloniemartienne.model.Mission;
 import be.condorcet.gestioncoloniemartienne.service.MissionService;
 import jakarta.inject.Inject;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -32,12 +34,32 @@ public class MissionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
+        // secu CHEF
+        HttpSession session = request.getSession();
+        MembreEquipage user = (MembreEquipage) session.getAttribute("user");
+
+        if (user == null || !"CHEF".equals(user.getRole())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Accès réservé au Chef.");
+            return;
+        }
+
         try {
             String action = request.getParameter("action");
 
             if ("delete".equals(action)) {
                 String idStr = request.getParameter("id");
                 service.supprimerMission(Long.parseLong(idStr));
+            }else if ("updateStatus".equals(action)) {
+                //maj
+                Long id = Long.parseLong(request.getParameter("id"));
+                String newStatut = request.getParameter("statut"); // ex: "EN_COURS", "TERMINEE"
+
+                Mission m = service.trouverParId(id);
+                if (m != null) {
+                    m.setStatut(newStatut);
+                    service.modifierMission(m);
+                }
+
             } else {
                 //ajout
 

@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MembreServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8"); // juste pour que les accents etc soient la
 
         // Récupérer la liste
-        List<MembreEquipage> liste = service.listerTous();
+        List<MembreEquipage> liste = service.listerTout();
 
         // Donner la liste à la JSP
         request.setAttribute("membres", liste);
@@ -40,6 +41,14 @@ public class MembreServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8"); // juste pour que les accents etc soient la
 
+        HttpSession session = request.getSession();
+        MembreEquipage user = (MembreEquipage) session.getAttribute("user");
+
+        if (user == null || !"CHEF".equals(user.getRole())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Accès interdit : Seul le Chef peut gérer le recrutement.");
+            return;
+        }
+
         try{
 
             String action = request.getParameter("action");
@@ -47,6 +56,10 @@ public class MembreServlet extends HttpServlet {
             if ("delete".equals(action)) {
 
                 Long id = Long.parseLong(request.getParameter("id"));
+                //On ne peut pas se supprimer soi-même
+                if (user.getId().equals(id)) {
+                    throw new BusinessException("Vous ne pouvez pas vous éjecter vous-même !");
+                }
                 service.supprimerMembre(id);
                 System.out.println("Supprimation d'un membre");
             } else {
@@ -71,7 +84,7 @@ public class MembreServlet extends HttpServlet {
             request.setAttribute("erreur", e.getMessage());
 
             // recharge les membres car on passe pas par doget donc membres peut etre null
-            request.setAttribute("membres", service.listerTous());
+            request.setAttribute("membres", service.listerTout());
 
             // Ré-affichage de la page avec message
             request.getRequestDispatcher("/WEB-INF/JSP/membres.jsp")

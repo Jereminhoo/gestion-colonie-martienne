@@ -51,6 +51,9 @@
     <a href="missions">🪐 Missions</a>
     <a href="taches">⚡ Tâches</a>
   </div>
+  <a href="profil" style="color: white; text-decoration: none; margin-right: 10px;">
+    👤 ${sessionScope.user.login} (Modifier mon profil)
+  </a>
 
   <a href="auth?action=logout" class="logout-btn">Déconnexion</a>
 </div>

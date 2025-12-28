@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
         String loginForm = request.getParameter("login");
         String passForm = request.getParameter("password");
 
-        List<MembreEquipage> membres = membreService.listerTous();
+        List<MembreEquipage> membres = membreService.listerTout();
         MembreEquipage userTrouve = null;
 
         for (MembreEquipage m : membres) {

@@ -16,7 +16,7 @@ public class Mission implements Serializable {
     @Column(nullable = false)
     private String titre;
 
-    @Column(length = 1000) // On autorise une description plus longue
+    @Column(length = 1000)
     private String description;
 
     @Column(name = "DATE_DEBUT")

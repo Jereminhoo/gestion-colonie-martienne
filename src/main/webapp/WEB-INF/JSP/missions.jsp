@@ -4,172 +4,133 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Missions - Colonie Martienne</title>
+  <title>Planning Missions</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #eef1f5;
-      padding: 20px;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; margin: 0; }
+    .container { width: 90%; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
 
-    .container {
-      width: 800px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border: 1px solid #ccc;
-    }
+    .chef-box { background: #eaf2f8; border: 1px solid #3498db; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+    .chef-box h3 { margin-top: 0; color: #2980b9; font-size: 1.1em; }
 
-    h1, h2 { color: #2c3e50;
-      border-bottom: 2px solid #2c3e50;
-      padding-bottom: 10px;
-    }
+    input, textarea, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-right: 5px; margin-bottom: 5px; }
+    textarea { width: 100%; height: 60px; resize: vertical; margin-top: 5px; }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+    button { padding: 8px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; font-weight: bold; transition: opacity 0.2s; }
+    button:hover { opacity: 0.9; }
+    .btn-add { background-color: #3498db; }
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: top; }
+    th { background-color: #ecf0f1; color: #333; }
 
-    input[type=text], input[type=date], textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #999;
-      box-sizing: border-box;
-    }
+    .badge { padding: 5px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; color: white; display: inline-block; }
+    .bg-prevue { background-color: #f39c12; }
+    .bg-encours { background-color: #27ae60; }
+    .bg-terminee { background-color: #7f8c8d; }
 
-    textarea { height: 80px;
-      font-family: Arial, sans-serif;
-    }
+    .btn-del { background-color: #c0392b; font-size: 0.8em; padding: 5px 10px; }
 
-    button {
-      background-color: #0056b3;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover { background-color: #004494; }
+    .btn-status { font-size: 0.75em; padding: 3px 6px; background: #95a5a6; margin-top: 5px; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th {
-      background-color: #0056b3;
-      color: white;
-      padding: 10px;
-      text-align: left;
-    }
-
-    td {
-      border: 1px solid #ccc;
-      padding: 8px;
-    }
-
-
-    .btn-del {
-      background-color: #d9534f;
-      padding: 5px 10px;
-      font-size: 12px;
-    }
-    .btn-del:hover { background-color: #c9302c; }
-
-    .error {
-      color: #a94442;
-      background-color: #f2dede;
-      border: 1px solid #ebccd1;
-      padding: 10px;
-      margin-bottom: 15px;
-    }
+    .error-msg { color: #c0392b; background: #fadbd8; padding: 10px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #f5b7b1; }
   </style>
 </head>
 <body>
 
-<div class="container">
+<jsp:include page="/WEB-INF/JSP/menu.jsp" />
 
-  <h1>Planification des Missions</h1>
+<div class="container">
+  <h1>🪐 Planning des Missions</h1>
 
   <c:if test="${not empty erreur}">
-    <div class="error">Attention : ${erreur}</div>
+    <div class="error-msg">Erreur : ${erreur}</div>
   </c:if>
 
-  <div style="background-color: #fafafa; padding: 15px; border: 1px solid #ddd;">
-    <h2>Nouvelle Mission</h2>
-    <form action="missions" method="post">
+  <c:if test="${sessionScope.user.role == 'CHEF'}">
+    <div class="chef-box">
+      <h3>Nouvelle Mission</h3>
+      <form action="missions" method="post">
+        <input type="text" name="titre" placeholder="Titre de la mission" style="width: 300px;" required>
 
-      <div class="form-group">
-        <label>Titre de la mission :</label>
-        <input type="text" name="titre" required>
-      </div>
-
-      <div class="form-group">
-        <label>Description :</label>
-        <textarea name="description" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Date de début :</label>
+        <label>Début :</label>
         <input type="date" name="dateDebut" required>
-      </div>
 
-      <div class="form-group">
-        <label>Date de fin :</label>
-        <input type="date" name="dateFin" required>
-      </div>
+        <label>Fin (Optionnel) :</label>
+        <input type="date" name="dateFin">
 
-      <div class="form-group">
-        <label>Statut :</label>
-        <input type="radio" name="statut" value="PREVUE" checked> Prévue &nbsp;
-        <input type="radio" name="statut" value="EN_COURS"> En cours &nbsp;
-        <input type="radio" name="statut" value="TERMINEE"> Terminée
-      </div>
+        <textarea name="description" placeholder="Description de l'objectif..."></textarea>
 
-      <button type="submit">Enregistrer</button>
-    </form>
-  </div>
-
-  <h2>Liste des missions</h2>
+        <br>
+        <button type="submit" class="btn-add">Planifier la mission</button>
+      </form>
+    </div>
+  </c:if>
 
   <table>
     <thead>
     <tr>
-      <th>Mission</th>
-      <th>Période</th>
-      <th>Statut</th>
-      <th>Action</th>
+      <th style="width: 15%;">Dates</th>
+      <th style="width: 20%;">Mission</th>
+      <th>Description</th>
+      <th style="width: 10%;">Statut</th>
+      <c:if test="${sessionScope.user.role == 'CHEF'}">
+        <th style="width: 10%;">Actions</th>
+      </c:if>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="m" items="${missions}">
+    <c:forEach items="${missions}" var="m">
       <tr>
         <td>
-          <b>${m.titre}</b><br>
-          <span style="font-size: 0.9em; color: #555;">${m.description}</span>
+          <strong>${m.dateDebut}</strong>
+          <c:if test="${not empty m.dateFin}">
+            <br>au ${m.dateFin}
+          </c:if>
         </td>
-        <td>${m.dateDebut} <br> ${m.dateFin}</td>
-        <td>${m.statut}</td>
+
+        <td><strong>${m.titre}</strong></td>
+
+        <td>${m.description}</td>
+
         <td>
-          <form action="missions" method="post" style="margin:0;">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="id" value="${m.id}">
-            <button type="submit" class="btn-del" onclick="return confirm('Voulez-vous supprimer ?')">
-              Supprimer
-            </button>
-          </form>
+          <c:choose>
+            <c:when test="${m.statut == 'EN_COURS'}"> <span class="badge bg-encours">EN COURS</span> </c:when>
+            <c:when test="${m.statut == 'TERMINEE'}"> <span class="badge bg-terminee">TERMINEE</span> </c:when>
+            <c:otherwise> <span class="badge bg-prevue">PREVUE</span> </c:otherwise>
+          </c:choose>
         </td>
+
+        <c:if test="${sessionScope.user.role == 'CHEF'}">
+          <td>
+            <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:10px;">
+              <form action="missions" method="post">
+                <input type="hidden" name="action" value="updateStatus">
+                <input type="hidden" name="id" value="${m.id}">
+                <input type="hidden" name="statut" value="EN_COURS">
+                <button class="btn-status" style="background:#27ae60;">▶ Lancer</button>
+              </form>
+
+              <form action="missions" method="post">
+                <input type="hidden" name="action" value="updateStatus">
+                <input type="hidden" name="id" value="${m.id}">
+                <input type="hidden" name="statut" value="TERMINEE">
+                <button class="btn-status" style="background:#34495e;">🏁 Terminer</button>
+              </form>
+            </div>
+
+            <form action="missions" method="post" onsubmit="return confirm('Annuler cette mission ?');">
+              <input type="hidden" name="action" value="delete">
+              <input type="hidden" name="id" value="${m.id}">
+              <button class="btn-del">Supprimer</button>
+            </form>
+          </td>
+        </c:if>
+
       </tr>
     </c:forEach>
     </tbody>
   </table>
-
 </div>
 
 </body>

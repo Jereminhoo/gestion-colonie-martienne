@@ -64,4 +64,9 @@ public class MissionService {
     public Mission trouverParId(Long id) {
         return dao.findById(id);
     }
+
+    @Transactional
+    public void modifierMission(Mission m) {
+        em.merge(m);
+    }
 }
