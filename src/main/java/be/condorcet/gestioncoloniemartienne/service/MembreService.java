@@ -41,8 +41,8 @@ public class MembreService {
         }
 
         // Mot de passe trop faible
-        if (m.getPassword() == null || m.getPassword().length() < 6) {
-            throw new BusinessException("Mot de passe trop faible (min. 6 caractères)");
+        if (m.getPassword() == null || m.getPassword().length() < 3) {
+            throw new BusinessException("Mot de passe trop faible (min. 3 caractères)");
         }
         m.setRole("MEMBRE"); // règle métier
 

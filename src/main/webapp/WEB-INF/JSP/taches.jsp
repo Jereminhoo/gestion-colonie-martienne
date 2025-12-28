@@ -136,7 +136,7 @@
             </td>
             <td>
               📂 ${t.mission.titre}<br>
-              👤 ${t.membreAssigne.nom}
+              👤 ${t.membreAssigne.login}
             </td>
             <td>
               <c:choose>
