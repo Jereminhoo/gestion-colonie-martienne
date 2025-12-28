@@ -128,48 +128,74 @@
         .c-taches { border-top-color: #27ae60; }
         .btn-taches { background-color: #27ae60; }
 
+        .stat-number { font-size: 2em; font-weight: bold; display: block; margin-bottom: 5px; }
+        .alert-text { color: #c0392b; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
 <div class="top-bar">
     <div class="user-info">
-        Bienvenue, <b>${sessionScope.user.prenom} ${sessionScope.user.nom}</b> (${sessionScope.user.role})
+        Bienvenue, <b>${sessionScope.user.prenom} ${sessionScope.user.nom}</b>
+
+        | <a href="profil" style="color: #333; text-decoration: underline;">Mon Profil</a>
     </div>
     <a href="auth?action=logout" class="btn-logout">Se déconnecter</a>
 </div>
 
 <div class="container">
     <h1>Base Martienne</h1>
-    <p class="subtitle">Tableau de bord de gestion</p>
+    <p class="subtitle">Tableau de bord de gestion - ${sessionScope.user.role}</p>
 
     <div class="dashboard-grid">
 
         <div class="card c-membres">
             <span class="icon">👩‍🚀</span>
             <h2>Équipage</h2>
-            <p>Gestion des membres et accréditations.</p>
+            <p>Annuaire et gestion du personnel.</p>
             <a href="membres" class="btn-link btn-membres">Gérer</a>
         </div>
 
         <div class="card c-ressources">
             <span class="icon">💧</span>
             <h2>Ressources</h2>
-            <p>Eau, oxygène et gestion des stocks.</p>
-            <a href="ressources" class="btn-link btn-ressources">Consulter</a>
+
+            <c:choose>
+                <c:when test="${nbAlertes > 0}">
+                    <span class="stat-number" style="color:#c0392b;">${nbAlertes}</span>
+                    <p class="alert-text">⚠️ Alertes Critiques !</p>
+                </c:when>
+                <c:otherwise>
+                    <p style="color:#27ae60;">Stocks nominaux ✔</p>
+                </c:otherwise>
+            </c:choose>
+
+            <a href="ressources" class="btn-link btn-ressources">Inventaire</a>
         </div>
 
         <div class="card c-missions">
             <span class="icon">🪐</span>
             <h2>Missions</h2>
-            <p>Planning et objectifs des expéditions.</p>
+
+            <span class="stat-number">${nbMissions}</span>
+            <p>Mission(s) en cours</p>
+
             <a href="missions" class="btn-link btn-missions">Planifier</a>
         </div>
 
         <div class="card c-taches">
             <span class="icon">⚡</span>
-            <h2>Tâches</h2>
-            <p>Maintenance et assignation du travail.</p>
+            <h2>Mes Tâches</h2>
+
+            <c:if test="${nbTaches > 0}">
+                <span class="stat-number">${nbTaches}</span>
+                <p>Tâche(s) à faire</p>
+            </c:if>
+            <c:if test="${nbTaches == 0}">
+                <p style="color:#27ae60;">Tout est fait ! 🎉</p>
+            </c:if>
+
             <a href="taches" class="btn-link btn-taches">Suivre</a>
         </div>
 

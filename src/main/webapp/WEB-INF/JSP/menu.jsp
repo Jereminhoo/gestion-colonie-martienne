@@ -46,7 +46,7 @@
 
 <div class="navbar">
   <div class="nav-links">
-    <a href="index.jsp">🏠 Accueil</a>
+    <a href="home">🏠 Accueil</a>
     <a href="membres">👩‍🚀 Équipage</a>
     <a href="missions">🪐 Missions</a>
     <a href="taches">⚡ Tâches</a>
