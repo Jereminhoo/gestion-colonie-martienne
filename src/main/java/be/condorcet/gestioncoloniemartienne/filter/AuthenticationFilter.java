@@ -34,7 +34,7 @@ public class AuthenticationFilter implements Filter {
         // --- LA LOGIQUE DU GARDIEN ---
 
         if (estConnecte || estPageLogin || estServletAuth) {
-            // C'est bon, tu peux passer !
+            // C'est bon, tu peux passer
             chain.doFilter(request, response);
         } else {
             // Pas connecté et tu essaies de tricher ? -> Retour à la case départ !

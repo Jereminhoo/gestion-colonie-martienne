@@ -54,13 +54,21 @@
                 <input type="password" name="password" placeholder="Mot de passe" required>
 
                 <select name="specialite" required>
-                    <option value="" disabled selected>-- Spécialité --</option>
-                    <option value="INGENIEUR">Ingénieur</option>
-                    <option value="BOTANISTE">Botaniste</option>
-                    <option value="MEDECIN">Médecin</option>
-                    <option value="PILOTE">Pilote</option>
-                    <option value="SECURITE">Sécurité</option>
-                    <option value="OUVRIER">Ouvrier</option>
+                    <option value="PILOTE">Pilote de Vaisseau</option>
+                    <option value="CO-PILOTE">Co-Pilote</option>
+                    <option value="INGENIEUR">Ingénieur en Chef</option>
+                    <option value="MECANICIEN">Mécanicien Rover</option>
+
+                    <option value="BOTANISTE">Botaniste (Culture de patates)</option>
+                    <option value="MEDECIN">Médecin de bord</option>
+                    <option value="XENOBIOLOGISTE">Xénobiologiste (Spécialiste Aliens)</option>
+                    <option value="GEOLOGUE">Géologue</option>
+
+                    <option value="SECURITE">Chef de la Sécurité</option>
+                    <option value="INFORMATICIEN">Hacker / Admin Sys</option>
+                    <option value="CUISINIER">Chef Cuisinier (Ration master)</option>
+                    <option value="OUVRIER">Ouvrier Maintenance</option>
+                </select>
                 </select>
 
                 <button type="submit" class="btn-add">Recruter</button>

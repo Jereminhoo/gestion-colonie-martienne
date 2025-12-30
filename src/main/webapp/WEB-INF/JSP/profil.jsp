@@ -53,14 +53,23 @@
 
         <label>Spécialité :</label>
         <select name="specialite" required>
-            <option value="INGENIEUR" ${sessionScope.user.specialite == 'INGENIEUR' ? 'selected' : ''}>Ingénieur</option>
-            <option value="BOTANISTE" ${sessionScope.user.specialite == 'BOTANISTE' ? 'selected' : ''}>Botaniste</option>
-            <option value="MEDECIN" ${sessionScope.user.specialite == 'MEDECIN' ? 'selected' : ''}>Médecin</option>
-            <option value="PILOTE" ${sessionScope.user.specialite == 'PILOTE' ? 'selected' : ''}>Pilote</option>
-            <option value="SECURITE" ${sessionScope.user.specialite == 'SECURITE' ? 'selected' : ''}>Sécurité</option>
-            <option value="OUVRIER" ${sessionScope.user.specialite == 'OUVRIER' ? 'selected' : ''}>Ouvrier</option>
+            <option value="" disabled>Choisir une spécialité</option>
+
+            <option value="PILOTE" ${sessionScope.user.specialite == 'PILOTE' ? 'selected' : ''}>Pilote de Vaisseau</option>
+
             <option value="CO-PILOTE" ${sessionScope.user.specialite == 'CO-PILOTE' ? 'selected' : ''}>Co-Pilote</option>
-            <option value="MECANICIEN" ${sessionScope.user.specialite == 'MECANICIEN' ? 'selected' : ''}>Mécanicien</option>
+            <option value="INGENIEUR" ${sessionScope.user.specialite == 'INGENIEUR' ? 'selected' : ''}>Ingénieur en Chef</option>
+            <option value="MECANICIEN" ${sessionScope.user.specialite == 'MECANICIEN' ? 'selected' : ''}>Mécanicien Rover</option>
+
+            <option value="BOTANISTE" ${sessionScope.user.specialite == 'BOTANISTE' ? 'selected' : ''}>Botaniste (Culture de patates)</option>
+            <option value="MEDECIN" ${sessionScope.user.specialite == 'MEDECIN' ? 'selected' : ''}>Médecin de bord</option>
+            <option value="XENOBIOLOGISTE" ${sessionScope.user.specialite == 'XENOBIOLOGISTE' ? 'selected' : ''}>Xénobiologiste (Spécialiste Aliens)</option>
+            <option value="GEOLOGUE" ${sessionScope.user.specialite == 'GEOLOGUE' ? 'selected' : ''}>Géologue</option>
+
+            <option value="SECURITE" ${sessionScope.user.specialite == 'SECURITE' ? 'selected' : ''}>Chef de la Sécurité</option>
+            <option value="INFORMATICIEN" ${sessionScope.user.specialite == 'INFORMATICIEN' ? 'selected' : ''}>Hacker / Admin Sys</option>
+            <option value="CUISINIER" ${sessionScope.user.specialite == 'CUISINIER' ? 'selected' : ''}>Chef Cuisinier (Ration master)</option>
+            <option value="OUVRIER" ${sessionScope.user.specialite == 'OUVRIER' ? 'selected' : ''}>Ouvrier Maintenance</option>
         </select>
 
         <label>Nouveau mot de passe :</label>
