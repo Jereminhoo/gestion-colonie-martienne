@@ -66,7 +66,10 @@ public class RessourceService {
 
     @Transactional
     public void modifier(Ressource r) {
-        em.merge(r);
+        if (r.getQuantite() < 0) {
+            throw new BusinessException("La quantité ne peut pas être négative !");
+        }
+        dao.update(r);
     }
 
 

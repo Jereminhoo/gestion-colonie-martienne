@@ -27,13 +27,14 @@ public class AuthenticationFilter implements Filter {
         // - /auth : pour que la Servlet puisse vérifier le mot de passe
         boolean estPageLogin = chemin.endsWith("login.jsp");
         boolean estServletAuth = chemin.contains("/auth");
+        boolean estApi = chemin.contains("/api"); //Laisse passer l'API (sinn renvoie page login.jsp dans postman)
 
         // 3. On vérifie si l'utilisateur est connecté (en Session)
         boolean estConnecte = (session != null && session.getAttribute("user") != null);
 
         // --- LA LOGIQUE DU GARDIEN ---
 
-        if (estConnecte || estPageLogin || estServletAuth) {
+        if (estConnecte || estPageLogin || estServletAuth || estApi) {
             // C'est bon, tu peux passer
             chain.doFilter(request, response);
         } else {
