@@ -1,5 +1,6 @@
 package be.condorcet.gestioncoloniemartienne.model;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
@@ -25,11 +26,13 @@ public class Tache implements Serializable {
     // Une tâche ne peut pas exister sans mission.
     @ManyToOne
     @JoinColumn(name = "REF_MISSION_ID", nullable = false)
+    @JsonbTransient //On ne veut pas voir la Mission quand on affiche une Tâche en JSON
     private Mission mission;
 
     // Une tâche doit etre attribué a un membre
     @ManyToOne
     @JoinColumn(name = "REF_MEMBRE_ID", nullable = false)
+    @JsonbTransient
     private MembreEquipage membreAssigne;
 
 
