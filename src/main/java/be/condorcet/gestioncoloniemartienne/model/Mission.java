@@ -1,5 +1,6 @@
 package be.condorcet.gestioncoloniemartienne.model;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public class Mission implements Serializable {
 
     //Une mission contient une liste de tâches
     // "mappedBy" doit correspondre au nom de la variable dans la classe Tache (qu'on fera juste après)
+    @JsonbTransient
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tache> taches;
 

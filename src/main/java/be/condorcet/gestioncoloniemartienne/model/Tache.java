@@ -26,13 +26,11 @@ public class Tache implements Serializable {
     // Une tâche ne peut pas exister sans mission.
     @ManyToOne
     @JoinColumn(name = "REF_MISSION_ID", nullable = false)
-    @JsonbTransient //On ne veut pas voir la Mission quand on affiche une Tâche en JSON
     private Mission mission;
 
     // Une tâche doit etre attribué a un membre
     @ManyToOne
     @JoinColumn(name = "REF_MEMBRE_ID", nullable = false)
-    @JsonbTransient
     private MembreEquipage membreAssigne;
 
 
@@ -60,9 +58,11 @@ public class Tache implements Serializable {
     public String getStatut() { return statut; }
     public void setStatut(String statut) { this.statut = statut; }
 
+    @JsonbTransient //On ne veut pas voir la Mission quand on affiche une Tâche en JSON
     public Mission getMission() { return mission; }
     public void setMission(Mission mission) { this.mission = mission; }
 
+    @JsonbTransient
     public MembreEquipage getMembreAssigne() { return membreAssigne; }
     public void setMembreAssigne(MembreEquipage membreAssigne) { this.membreAssigne = membreAssigne; }
 

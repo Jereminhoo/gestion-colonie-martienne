@@ -1,5 +1,6 @@
 package be.condorcet.gestioncoloniemartienne.model;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class MembreEquipage implements Serializable {
     private String specialite; // ex: mecano, Ingénieur...
 
     //Un membre peut avoir plusieurs tâches assignées
+    @JsonbTransient
     @OneToMany(mappedBy = "membreAssigne")
     private List<Tache> tachesAssignees;
 
