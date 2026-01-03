@@ -86,11 +86,11 @@ Les échanges de données se font au format **JSON**.
 
 1.  Cloner le dépôt :
     ```bash
-    git clone [https://github.com/ton-repo/gestion-colonie-martienne.git](https://github.com/ton-repo/gestion-colonie-martienne.git)
+    git clone [https://github.com/Jereminhoo/gestion-colonie-martienne.git]
     ```
 2.  Configurer la base de données dans `src/main/resources/META-INF/persistence.xml`.
 3.  Lancer le serveur d'application (ex: Wildfly / Glassfish).
-4.  Accéder à l'API via `http://localhost:8080/NOM_DU_PROJET/api/...`.
+4.  Accéder à l'API via `http://localhost:8080/gestion-colonie-martienne/api/...`.
 
 ---
 
